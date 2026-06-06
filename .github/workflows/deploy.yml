@@ -100,8 +100,8 @@ jobs:
           DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
           DEPLOY_COMPOSE_FILE: ${{ secrets.DEPLOY_COMPOSE_FILE || 'docker-compose.yml' }}
           IMAGE_REF: ${{ needs.build.outputs.image_ref }}
-          GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
-          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
+          GHCR_USERNAME: ${{ secrets.GHCR_USERNAME || github.repository_owner }}
+          GHCR_TOKEN: ${{ secrets.GHCR_TOKEN || secrets.GITHUB_TOKEN }}
         run: |
           PORT="${DEPLOY_SSH_PORT:-22}"
           ssh -i ~/.ssh/deploy_key -p "$PORT" "$DEPLOY_USER@$DEPLOY_HOST" \
@@ -111,8 +111,8 @@ jobs:
           DEPLOY_PATH="$1"
           COMPOSE_FILE="$2"
           IMAGE_REF="$3"
-          GHCR_USERNAME="$4"
-          GHCR_TOKEN="$5"
+          GHCR_USERNAME="${4:-}"
+          GHCR_TOKEN="${5:-}"
 
           cd "$DEPLOY_PATH"
 
@@ -123,6 +123,7 @@ jobs:
 
           if [ -n "$GHCR_USERNAME" ] && [ -n "$GHCR_TOKEN" ]; then
             echo "$GHCR_TOKEN" | docker login ghcr.io -u "$GHCR_USERNAME" --password-stdin
+            trap 'docker logout ghcr.io >/dev/null 2>&1 || true' EXIT
           fi
 
           cat > docker-compose.deploy.override.yml <<EOF
