@@ -224,6 +224,20 @@ function applyFeatureFlags(items: NavItem[]): NavItem[] {
   return out
 }
 
+function resolveCustomMenuPath(item: { id: string, url?: string }): string {
+  const fallback = `/custom/${item.id}`
+  const rawUrl = item.url?.trim() ?? ''
+  if (!rawUrl || rawUrl.startsWith('md:')) return fallback
+
+  try {
+    const url = new URL(rawUrl, window.location.origin)
+    if (url.origin !== window.location.origin) return fallback
+    return `${url.pathname}${url.search}${url.hash}` || '/'
+  } catch {
+    return fallback
+  }
+}
+
 const { t } = useI18n()
 
 const route = useRoute()
@@ -676,7 +690,7 @@ function buildSelfNavItems(withDashboard: boolean): NavItem[] {
     { path: '/affiliate', label: t('nav.affiliate'), icon: UsersIcon, hideInSimpleMode: true, featureFlag: flagAffiliate },
     { path: '/profile', label: t('nav.profile'), icon: UserIcon },
     ...customMenuItemsForUser.value.map((item): NavItem => ({
-      path: `/custom/${item.id}`,
+      path: resolveCustomMenuPath(item),
       label: item.label,
       icon: null,
       iconSvg: item.icon_svg,
@@ -775,14 +789,14 @@ const adminNavItems = computed((): NavItem[] => {
     filtered.push({ path: '/keys', label: t('nav.apiKeys'), icon: KeyIcon })
     filtered.push({ path: '/admin/settings', label: t('nav.settings'), icon: CogIcon })
     for (const cm of customMenuItemsForAdmin.value) {
-      filtered.push({ path: `/custom/${cm.id}`, label: cm.label, icon: null, iconSvg: cm.icon_svg })
+      filtered.push({ path: resolveCustomMenuPath(cm), label: cm.label, icon: null, iconSvg: cm.icon_svg })
     }
     return filtered
   }
 
   visible.push({ path: '/admin/settings', label: t('nav.settings'), icon: CogIcon })
   for (const cm of customMenuItemsForAdmin.value) {
-    visible.push({ path: `/custom/${cm.id}`, label: cm.label, icon: null, iconSvg: cm.icon_svg })
+    visible.push({ path: resolveCustomMenuPath(cm), label: cm.label, icon: null, iconSvg: cm.icon_svg })
   }
   return visible
 })
