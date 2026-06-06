@@ -252,8 +252,8 @@
               </a>
             </article>
             <figure class="instruction-figure instruction-qr">
-              <img src="/img/codex-guide/image-16.png" alt="问题交流群二维码" loading="lazy" />
-              <figcaption>有任何问题请扫码加群，联系群主处理。</figcaption>
+              <img src="/img/codex-guide/qq-group.jpg" alt="Codex-GPT-AI QQ 群二维码" loading="lazy" />
+              <figcaption>有任何问题请扫码加入 QQ 群：725442688。</figcaption>
             </figure>
           </div>
 
@@ -621,7 +621,7 @@
             <p><strong>Q2：泄露密钥怎么办？</strong><br />立即在“API 密钥”页面删除原密钥，重新创建一把，然后更新所有客户端的配置。</p>
             <p><strong>Q3：Codex / Claude Code / Open Code 可以共用一把密钥吗？</strong><br />可以，但不建议。多把密钥独立计费、独立吊销，出问题时排查更快。</p>
             <p><strong>Q4：充值的钱和订阅额度怎么消费？</strong><br />额度模式按调用量从余额扣款；订阅模式则在订阅周期或每日额度内使用，具体计费规则以中转后台实时显示为准。</p>
-            <p><strong>Q5：技术支持怎么联系？</strong><br />可查看页面上方交流群二维码，或登录中转站后在个人中心、站内公告、客服入口查看最新联系方式。</p>
+            <p><strong>Q5：技术支持怎么联系？</strong><br />请查看页面上方 QQ 群二维码，或直接搜索群号 725442688 加群。</p>
           </div>
         </article>
       </main>
