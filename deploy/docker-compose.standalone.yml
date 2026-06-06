@@ -1,7 +1,7 @@
 # =============================================================================
-# Sub2API Docker Compose - Standalone Configuration
+# GPT AI Docker Compose - Standalone Configuration
 # =============================================================================
-# This configuration runs only the Sub2API application.
+# This configuration runs only the GPT AI application.
 # PostgreSQL and Redis must be provided externally.
 #
 # Usage:
