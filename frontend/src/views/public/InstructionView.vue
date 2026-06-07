@@ -113,14 +113,6 @@
                     </td>
                   </tr>
                   <tr>
-                    <th>卡密自助购买地址</th>
-                    <td>
-                      <a href="https://pay.ldxp.cn/shop/LSSZLMUY" target="_blank" rel="noopener noreferrer">
-                        https://pay.ldxp.cn/shop/LSSZLMUY
-                      </a>
-                    </td>
-                  </tr>
-                  <tr>
                     <th>推荐客户端</th>
                     <td>可手动接入 Codex APP / Codex CLI / Codex VSCode 插件。</td>
                   </tr>
@@ -140,7 +132,7 @@
           <h2 id="readingGuide">阅读指南</h2>
           <p>
             本教程把使用流程拆成 <strong>“准备 → 拿 Key → 手动配置 → 验证”</strong> 四步。
-            无论是通过质保兑换补发的中转兑换码，还是在链动小铺购买的额度包兑换码，都适用以下流程。
+            如果你已经拿到平台发放的中转兑换码，或账号内已有站内充值 / 订阅权益，都可以按以下流程接入。
           </p>
           <div class="instruction-table-wrap">
             <table class="instruction-table">
@@ -196,26 +188,12 @@
           <div class="instruction-alert instruction-alert-info">
             <Icon name="questionCircle" size="md" />
             <div>
-              <strong>兑换码来源都适用。</strong>
-              <span>本教程同时适用于按邮箱质保剩余时间补发的中转兑换码，以及在链动小铺购买的额度包兑换码。</span>
+              <strong>已发放兑换码适用。</strong>
+              <span>如果你拿到质保补发或平台发放的中转兑换码，可按本教程完成兑换、创建密钥和客户端接入。</span>
             </div>
           </div>
 
           <div class="instruction-card-grid" aria-label="API Key 分组选择规则">
-            <article class="instruction-card instruction-card-danger">
-              <Icon name="exclamationTriangle" size="md" />
-              <div>
-                <strong>链动小铺额度包：必须选择 GPT 分组</strong>
-                <span>链动小铺购买的额度包（不限时），新建 API Key 时必须选择 <code>GPT</code> 分组。</span>
-              </div>
-            </article>
-            <article class="instruction-card instruction-card-warning">
-              <Icon name="calendar" size="md" />
-              <div>
-                <strong>链动小铺订阅包：选择对应订阅分组</strong>
-                <span>链动小铺购买的订阅包（不限时），新建 API Key 时选择你购买相应的额度分组。</span>
-              </div>
-            </article>
             <article class="instruction-card instruction-card-success">
               <Icon name="shield" size="md" />
               <div>
@@ -243,14 +221,6 @@
           </div>
 
           <div class="instruction-support-grid">
-            <article class="instruction-support-card">
-              <strong>需要额外购买卡密？</strong>
-              <span>可通过链动小铺自助购买额度包兑换码。</span>
-              <a href="https://pay.ldxp.cn/shop/LSSZLMUY" target="_blank" rel="noopener noreferrer" class="instruction-primary-link">
-                <Icon name="creditCard" size="sm" />
-                打开卡密自助购买地址
-              </a>
-            </article>
             <figure class="instruction-figure instruction-qr">
               <img src="/img/codex-guide/qq-group.jpg" alt="Codex-GPT-AI QQ 群二维码" loading="lazy" />
               <figcaption>有任何问题请扫码加入 QQ 群：725442688。</figcaption>
@@ -272,7 +242,7 @@
           </figure>
 
           <h2 id="billing">1.3 充值与订阅</h2>
-          <p>如果账号内还没有可用权益，可通过站内充值 / 订阅、卡密自助购买，或兑换已发放的中转兑换码获得额度。</p>
+          <p>如果账号内还没有可用权益，可通过站内充值 / 订阅，或兑换已发放的中转兑换码获得额度。</p>
           <ul class="instruction-steps-list">
             <li><strong>充值模式：</strong>按金额充值，按调用量从余额中扣费。</li>
             <li><strong>订阅模式：</strong>按天 / 月 / 季 / 年等周期提供固定额度，更适合稳定使用。</li>
@@ -289,7 +259,7 @@
           <p>
             登录后进入兑换页面
             <a :href="redeemUrl" target="_blank" rel="noopener noreferrer">{{ redeemUrl }}</a>，
-            输入提供给你的中转兑换码或额度包兑换码，点击“兑换”。
+            输入提供给你的中转兑换码，点击“兑换”。
           </p>
           <figure class="instruction-figure">
             <img src="/img/codex-guide/image-1.png" alt="兑换成功后的页面截图" loading="lazy" />
@@ -331,14 +301,7 @@
               <Icon name="dollar" size="md" />
               <div>
                 <strong>额度类分组：GPT</strong>
-                <span>链动小铺购买余额包或额度包时，应选择 <code>GPT</code> 分组。创建密钥前请再次确认自己使用的是订阅还是额度。</span>
-              </div>
-            </article>
-            <article class="instruction-card instruction-card-warning">
-              <Icon name="calendar" size="md" />
-              <div>
-                <strong>订阅类购买：对应订阅分组</strong>
-                <span>链动小铺购买订阅包时，选择你购买相应的订阅额度分组。</span>
+                <span>使用站内余额或额度类权益时，应选择 <code>GPT</code> 分组。创建密钥前请再次确认自己使用的是订阅还是额度。</span>
               </div>
             </article>
           </div>
@@ -367,7 +330,7 @@
               <div>
                 <span>2.2</span>
                 <h3>选择分组</h3>
-                <p>质保网站补发的兑换码选“质保补偿”；链动小铺额度兑换码选“GPT”或订阅分组。</p>
+                <p>质保网站补发的兑换码选“质保补偿”；站内余额或额度类权益选“GPT”；订阅权益选对应订阅分组。</p>
               </div>
               <figure class="instruction-figure instruction-figure-tall">
                 <img src="/img/codex-guide/image-19.png" alt="创建密钥弹窗中选择 API 分组" loading="lazy" />
@@ -549,7 +512,7 @@
             <li><Icon name="checkCircle" size="sm" /><span>编辑配置前是否已经完全关闭 Codex？</span></li>
             <li><Icon name="checkCircle" size="sm" /><span><code>config.toml</code> 和 <code>auth.json</code> 是否放在同一个 <code>.codex</code> 目录？</span></li>
             <li><Icon name="checkCircle" size="sm" /><span>是否粘贴了你自己生成的 API Key，而不是教程截图中的示例？</span></li>
-            <li><Icon name="checkCircle" size="sm" /><span>创建密钥时是否按来源选择正确分组：质保补发码选“质保补偿”，链动小铺额度兑换码选“GPT”或订阅分组？</span></li>
+            <li><Icon name="checkCircle" size="sm" /><span>创建密钥时是否按来源选择正确分组：质保补发码选“质保补偿”，站内余额或额度类权益选“GPT”，订阅权益选对应订阅分组？</span></li>
           </ul>
 
           <h2 id="troubleTable">4.3 常见报错对照表</h2>
