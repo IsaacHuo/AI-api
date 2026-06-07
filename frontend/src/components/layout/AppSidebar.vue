@@ -84,6 +84,8 @@
                       ? 'sidebar-wallet'
                       : undefined
               "
+              :target="item.openInNewTab ? '_blank' : undefined"
+              :rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
               @click="handleMenuItemClick(item.path)"
             >
               <span v-if="item.iconSvg" class="h-5 w-5 flex-shrink-0 sidebar-svg-icon" v-html="sanitizeSvg(item.iconSvg)"></span>
@@ -109,6 +111,8 @@
             :class="{ 'sidebar-link-active': isActive(item.path), 'sidebar-link-collapsed': sidebarCollapsed }"
             :title="sidebarCollapsed ? item.label : undefined"
             :data-tour="item.path === '/keys' ? 'sidebar-my-keys' : undefined"
+            :target="item.openInNewTab ? '_blank' : undefined"
+            :rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
             @click="handleMenuItemClick(item.path)"
           >
             <span v-if="item.iconSvg" class="h-5 w-5 flex-shrink-0 sidebar-svg-icon" v-html="sanitizeSvg(item.iconSvg)"></span>
@@ -129,6 +133,8 @@
             :class="{ 'sidebar-link-active': isActive(item.path), 'sidebar-link-collapsed': sidebarCollapsed }"
             :title="sidebarCollapsed ? item.label : undefined"
             :data-tour="item.path === '/keys' ? 'sidebar-my-keys' : undefined"
+            :target="item.openInNewTab ? '_blank' : undefined"
+            :rel="item.openInNewTab ? 'noopener noreferrer' : undefined"
             @click="handleMenuItemClick(item.path)"
           >
             <span v-if="item.iconSvg" class="h-5 w-5 flex-shrink-0 sidebar-svg-icon" v-html="sanitizeSvg(item.iconSvg)"></span>
@@ -193,6 +199,7 @@ interface NavItem {
   label: string
   icon: unknown
   iconSvg?: string
+  openInNewTab?: boolean
   hideInSimpleMode?: boolean
   children?: NavItem[]
   /**
@@ -235,6 +242,21 @@ function resolveCustomMenuPath(item: { id: string, url?: string }): string {
     return `${url.pathname}${url.search}${url.hash}` || '/'
   } catch {
     return fallback
+  }
+}
+
+function isInstructionMenuPath(path: string): boolean {
+  return path === '/instruction' || path.startsWith('/instruction?') || path.startsWith('/instruction#')
+}
+
+function buildCustomNavItem(item: { id: string, label: string, url?: string, icon_svg?: string }): NavItem {
+  const path = resolveCustomMenuPath(item)
+  return {
+    path,
+    label: item.label,
+    icon: null,
+    iconSvg: item.icon_svg,
+    openInNewTab: isInstructionMenuPath(path),
   }
 }
 
@@ -689,12 +711,7 @@ function buildSelfNavItems(withDashboard: boolean): NavItem[] {
     { path: '/redeem', label: t('nav.redeem'), icon: GiftIcon, hideInSimpleMode: true },
     { path: '/affiliate', label: t('nav.affiliate'), icon: UsersIcon, hideInSimpleMode: true, featureFlag: flagAffiliate },
     { path: '/profile', label: t('nav.profile'), icon: UserIcon },
-    ...customMenuItemsForUser.value.map((item): NavItem => ({
-      path: resolveCustomMenuPath(item),
-      label: item.label,
-      icon: null,
-      iconSvg: item.icon_svg,
-    })),
+    ...customMenuItemsForUser.value.map(buildCustomNavItem),
   )
   return items
 }
@@ -789,14 +806,14 @@ const adminNavItems = computed((): NavItem[] => {
     filtered.push({ path: '/keys', label: t('nav.apiKeys'), icon: KeyIcon })
     filtered.push({ path: '/admin/settings', label: t('nav.settings'), icon: CogIcon })
     for (const cm of customMenuItemsForAdmin.value) {
-      filtered.push({ path: resolveCustomMenuPath(cm), label: cm.label, icon: null, iconSvg: cm.icon_svg })
+      filtered.push(buildCustomNavItem(cm))
     }
     return filtered
   }
 
   visible.push({ path: '/admin/settings', label: t('nav.settings'), icon: CogIcon })
   for (const cm of customMenuItemsForAdmin.value) {
-    visible.push({ path: resolveCustomMenuPath(cm), label: cm.label, icon: null, iconSvg: cm.icon_svg })
+    visible.push(buildCustomNavItem(cm))
   }
   return visible
 })
